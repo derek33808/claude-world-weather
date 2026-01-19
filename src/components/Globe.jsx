@@ -77,6 +77,10 @@ export default function Globe({ onLocationClick, selectedLocation, onCityClick, 
           controls.addEventListener('end', handleInteractionEnd)
         }
         setIsReady(true)
+        // Trigger onGlobeReady callback after globe textures likely loaded
+        setTimeout(() => {
+          onGlobeReady && onGlobeReady()
+        }, 3000)
       }, 100)
     }
 
@@ -85,7 +89,7 @@ export default function Globe({ onLocationClick, selectedLocation, onCityClick, 
         clearTimeout(interactionTimeoutRef.current)
       }
     }
-  }, [handleInteractionStart, handleInteractionEnd])
+  }, [handleInteractionStart, handleInteractionEnd, onGlobeReady])
 
   useEffect(() => {
     if (selectedLocation && globeRef.current && isReady) {
