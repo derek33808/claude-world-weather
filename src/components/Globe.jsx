@@ -3,7 +3,7 @@ import GlobeGL from 'react-globe.gl'
 import { motion, AnimatePresence } from 'framer-motion'
 import { majorCities } from '../data/cities'
 
-export default function Globe({ onLocationClick, selectedLocation, onCityClick }) {
+export default function Globe({ onLocationClick, selectedLocation, onCityClick, onGlobeReady }) {
   const globeRef = useRef()
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 })
   const [isReady, setIsReady] = useState(false)
@@ -148,6 +148,7 @@ export default function Globe({ onLocationClick, selectedLocation, onCityClick }
         atmosphereColor="#4f9cff"
         atmosphereAltitude={0.2}
         onGlobeClick={handleGlobeClick}
+        onGlobeReady={() => onGlobeReady && onGlobeReady()}
         animateIn={true}
 
         // City labels with hover effect

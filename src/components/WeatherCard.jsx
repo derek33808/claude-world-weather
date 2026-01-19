@@ -183,18 +183,21 @@ export default function WeatherCard({ weather, location, onClose, unit = 'celsiu
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 100, scale: 0.9 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: 100, scale: 0.9 }}
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 50, scale: 0.9 }}
       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-      className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20"
+      className="absolute z-20
+                 bottom-20 left-4 right-4 md:bottom-auto md:left-auto
+                 md:right-6 md:top-1/2 md:transform md:-translate-y-1/2"
     >
       <div className={`
         relative overflow-hidden
         bg-gradient-to-br ${bgColors[weatherType]}
         backdrop-blur-xl
         border ${borderColors[weatherType]}
-        rounded-3xl p-6 w-80
+        rounded-3xl p-4 md:p-6
+        w-full md:w-80 max-w-sm mx-auto md:mx-0
         shadow-2xl shadow-black/30
       `}>
         {/* Decorative background elements */}
@@ -206,21 +209,22 @@ export default function WeatherCard({ weather, location, onClose, unit = 'celsiu
           onClick={onClose}
           whileHover={{ scale: 1.1, rotate: 90 }}
           whileTap={{ scale: 0.9 }}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center
-                     rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+          className="absolute top-3 right-3 md:top-4 md:right-4 w-10 h-10 md:w-8 md:h-8 flex items-center justify-center
+                     rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 transition-colors
+                     touch-manipulation"
         >
-          <svg className="w-4 h-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 md:w-4 md:h-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </motion.button>
 
         {/* Location header */}
-        <div className="mb-6 pr-8">
+        <div className="mb-4 md:mb-6 pr-10 md:pr-8">
           <motion.h2
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl font-bold text-white tracking-tight"
+            className="text-xl md:text-2xl font-bold text-white tracking-tight truncate"
           >
             {location?.city || 'Unknown Location'}
           </motion.h2>
@@ -228,40 +232,40 @@ export default function WeatherCard({ weather, location, onClose, unit = 'celsiu
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.7 }}
             transition={{ delay: 0.2 }}
-            className="text-white/70 text-sm mt-1"
+            className="text-white/70 text-sm mt-1 truncate"
           >
             {location?.country}
           </motion.p>
         </div>
 
         {/* Main weather display */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: 'spring', delay: 0.2 }}
-            className="w-24 h-24"
+            className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0"
           >
             <WeatherIcon type={weather.icon} className="w-full h-full" />
           </motion.div>
 
-          <div>
+          <div className="min-w-0 flex-1">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
               className="flex items-start"
             >
-              <span className="text-6xl font-light text-white tracking-tighter">
+              <span className="text-5xl md:text-6xl font-light text-white tracking-tighter">
                 {temp}
               </span>
-              <span className="text-2xl text-white/80 mt-2">°{unit === 'fahrenheit' ? 'F' : 'C'}</span>
+              <span className="text-xl md:text-2xl text-white/80 mt-1 md:mt-2">°{unit === 'fahrenheit' ? 'F' : 'C'}</span>
             </motion.div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-white/80 text-sm font-medium mt-1"
+              className="text-white/80 text-sm font-medium mt-1 truncate"
             >
               {weather.description}
             </motion.p>
@@ -273,26 +277,26 @@ export default function WeatherCard({ weather, location, onClose, unit = 'celsiu
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="grid grid-cols-2 gap-3"
+          className="grid grid-cols-2 gap-2 md:gap-3"
         >
-          <div className="bg-white/10 backdrop-blur rounded-2xl p-4 hover:bg-white/15 transition-colors">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="bg-white/10 backdrop-blur rounded-xl md:rounded-2xl p-3 md:p-4 hover:bg-white/15 active:bg-white/20 transition-colors">
+            <div className="flex items-center gap-2 mb-1 md:mb-2">
               <svg className="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4 4 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z" clipRule="evenodd" />
               </svg>
               <span className="text-white/60 text-xs">Humidity</span>
             </div>
-            <p className="text-white text-xl font-semibold">{weather.humidity}%</p>
+            <p className="text-white text-lg md:text-xl font-semibold">{weather.humidity}%</p>
           </div>
 
-          <div className="bg-white/10 backdrop-blur rounded-2xl p-4 hover:bg-white/15 transition-colors">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="bg-white/10 backdrop-blur rounded-xl md:rounded-2xl p-3 md:p-4 hover:bg-white/15 active:bg-white/20 transition-colors">
+            <div className="flex items-center gap-2 mb-1 md:mb-2">
               <svg className="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
               </svg>
               <span className="text-white/60 text-xs">Wind</span>
             </div>
-            <p className="text-white text-xl font-semibold">{weather.windSpeed}<span className="text-sm ml-1">km/h</span></p>
+            <p className="text-white text-lg md:text-xl font-semibold">{weather.windSpeed}<span className="text-sm ml-1">km/h</span></p>
           </div>
         </motion.div>
 
@@ -301,16 +305,16 @@ export default function WeatherCard({ weather, location, onClose, unit = 'celsiu
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between"
+          className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10 flex items-center justify-between"
         >
           <div className="flex items-center gap-2 text-white/40 text-xs">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
             </svg>
-            <span>{location?.lat?.toFixed(2)}°, {location?.lng?.toFixed(2)}°</span>
+            <span>{location?.lat?.toFixed(2)}, {location?.lng?.toFixed(2)}</span>
           </div>
           <div className="text-white/40 text-xs">
-            {weather.isDay ? '☀️ Day' : '🌙 Night'}
+            {weather.isDay ? 'Day' : 'Night'}
           </div>
         </motion.div>
       </div>

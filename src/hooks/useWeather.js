@@ -50,6 +50,7 @@ export function useWeather() {
     location,
     loading,
     error,
+    setError,
     fetchWeather,
     clearWeather
   }

@@ -38,7 +38,7 @@ async function searchCitiesOnline(query) {
   }
 }
 
-export default function SearchBar({ onCitySelect }) {
+export default function SearchBar({ onCitySelect, isMobile = false }) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [isOpen, setIsOpen] = useState(false)
@@ -101,7 +101,7 @@ export default function SearchBar({ onCitySelect }) {
   }
 
   return (
-    <div className="relative w-72">
+    <div className={`relative ${isMobile ? 'w-full' : 'w-72'}`}>
       <div className="relative">
         <svg
           className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/50"
@@ -124,10 +124,11 @@ export default function SearchBar({ onCitySelect }) {
           onKeyDown={handleKeyDown}
           onFocus={() => query.length >= 2 && setIsOpen(true)}
           placeholder="Search cities..."
-          className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-full
+          className={`w-full bg-white/10 backdrop-blur-md border border-white/20
                      py-3 pl-11 pr-4 text-white text-sm placeholder-white/50
                      focus:outline-none focus:border-cyan-400/50 focus:bg-white/15
-                     transition-all duration-200"
+                     transition-all duration-200 touch-manipulation
+                     ${isMobile ? 'rounded-xl min-h-[48px]' : 'rounded-full'}`}
         />
       </div>
 
@@ -163,25 +164,26 @@ export default function SearchBar({ onCitySelect }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.03 }}
                 className={`w-full px-4 py-3 text-left flex items-center justify-between
-                           transition-colors ${
+                           transition-colors touch-manipulation min-h-[52px]
+                           active:bg-cyan-500/30 ${
                              selectedIndex === index
                                ? 'bg-cyan-500/20'
                                : 'hover:bg-white/5'
                            }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
                     <svg className="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-white font-medium">{city.name}</p>
-                    <p className="text-white/50 text-xs">{city.country}</p>
+                  <div className="min-w-0">
+                    <p className="text-white font-medium truncate">{city.name}</p>
+                    <p className="text-white/50 text-xs truncate">{city.country}</p>
                   </div>
                 </div>
                 <svg
-                  className={`w-4 h-4 text-white/30 transition-transform ${
+                  className={`w-4 h-4 text-white/30 transition-transform flex-shrink-0 ${
                     selectedIndex === index ? 'translate-x-1 text-cyan-400' : ''
                   }`}
                   fill="none"
