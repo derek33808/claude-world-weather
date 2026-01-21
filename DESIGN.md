@@ -141,6 +141,83 @@ GET https://nominatim.openstreetmap.org/reverse
 ?lat=35.6762&lon=139.6503&format=json
 ```
 
+## 测试策略
+
+### 测试范围
+
+| 层级 | 测试对象 | 测试类型 |
+|------|----------|----------|
+| 服务层 | weatherApi.js | 单元测试 |
+| Hooks | useWeather.js | 单元测试 + Mock |
+| 组件 | WeatherCard.jsx | 组件测试 |
+| 组件 | LoadingSpinner.jsx | 快照测试 |
+| 集成 | API 调用流程 | 集成测试 |
+
+### 测试类型规划
+
+1. **单元测试**
+   - `weatherApi.js`: 测试 API 调用、数据转换、错误处理
+   - `useWeather.js`: 测试 hook 状态管理、loading/error 状态
+
+2. **组件测试**
+   - `WeatherCard.jsx`: 渲染、交互、props 验证
+   - 温度单位转换逻辑
+
+3. **Mock 测试**
+   - Open-Meteo API 响应模拟
+   - Nominatim API 响应模拟
+   - 网络错误场景
+
+### 测试工具
+
+| 工具 | 用途 |
+|------|------|
+| Vitest | 测试运行器 |
+| React Testing Library | 组件测试 |
+| @testing-library/react-hooks | Hook 测试 |
+| MSW (Mock Service Worker) | API Mock（可选） |
+
+### 覆盖率目标
+
+| 模块 | 目标覆盖率 |
+|------|------------|
+| services/weatherApi.js | 90% |
+| hooks/useWeather.js | 85% |
+| components/WeatherCard.jsx | 80% |
+| 整体项目 | 70% |
+
+---
+
+## 验收标准（量化）
+
+### 功能验收
+
+| 功能 | 验收标准 | 测试方法 |
+|------|----------|----------|
+| 3D 地球渲染 | 页面加载后 3 秒内完成渲染 | 手动测试 |
+| 天气查询 | 点击后 2 秒内返回结果 | 自动化测试 |
+| 城市搜索 | 输入 300ms 后触发搜索 | 单元测试 |
+| 温度切换 | 切换后 100ms 内更新显示 | 组件测试 |
+
+### 性能验收
+
+| 指标 | 目标值 | 测量方法 |
+|------|--------|----------|
+| 首屏加载时间 | < 3s (4G 网络) | Lighthouse |
+| 交互响应时间 | < 200ms | 手动测试 |
+| 内存占用 | < 150MB | DevTools |
+| Bundle 大小 | < 500KB (gzip) | Vite build |
+
+### 兼容性验收
+
+| 环境 | 要求 |
+|------|------|
+| 桌面浏览器 | Chrome 90+, Firefox 88+, Safari 14+ |
+| 移动端 | iOS Safari 14+, Chrome Mobile |
+| 屏幕尺寸 | 320px - 2560px |
+
+---
+
 ## 预期效果
 
 一个视觉震撼的天气网站：

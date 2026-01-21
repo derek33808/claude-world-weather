@@ -1,10 +1,76 @@
 # 全球天气查询网站 - 开发进度
 
-## 当前状态: ✅ V2.3 移动端优化完成
+## 当前状态: ✅ V2.4 测试框架完成
 
 ---
 
 ## 进度记录
+
+### 2026-01-21 13:45 - V2.4 测试框架建设
+
+**任务**: 根据 QA 报告添加测试框架和测试用例
+**状态**: ✅ 完成
+
+**执行内容:**
+
+1. **更新 DESIGN.md 测试策略**
+   - 添加测试范围定义（服务层、Hooks、组件）
+   - 添加测试类型规划（单元测试、组件测试、Mock 测试）
+   - 定义测试工具选型（Vitest、React Testing Library）
+   - 设定覆盖率目标（70% 整体，核心模块 85-90%）
+   - 量化验收标准（加载时间、响应时间、性能指标）
+
+2. **创建测试框架配置**
+   - 添加 Vitest 配置 (`vitest.config.js`)
+   - 添加 React Testing Library
+   - 配置 jsdom 测试环境
+   - 创建测试 setup 文件 (`src/test/setup.js`)
+   - 创建 mock 数据文件 (`src/test/mocks.js`)
+
+3. **创建测试用例**
+   - `useWeather.test.js` - 9 个测试用例
+     - 初始状态测试
+     - 成功获取天气测试
+     - API 错误处理测试
+     - 清除数据测试
+     - 坐标传递验证
+   - `WeatherCard.test.jsx` - 14 个测试用例
+     - 位置信息渲染
+     - 温度单位转换（摄氏/华氏）
+     - 天气详情显示
+     - 关闭按钮交互
+     - 边界条件测试（负温度、零度等）
+   - `weatherApi.test.js` - 25 个测试用例
+     - API 调用测试
+     - 响应数据转换
+     - 错误处理
+     - 天气代码解析
+     - 地理编码回退逻辑
+
+4. **测试执行结果**
+   - 总测试数: 48 个
+   - 通过: 48 个 (100%)
+   - 核心模块覆盖率:
+     - `useWeather.js`: 100%
+     - `weatherApi.js`: 100%
+     - `WeatherCard.jsx`: 100%
+
+**关键文件变更**:
+- `DESIGN.md` - 添加测试策略和量化验收标准
+- `package.json` - 添加测试依赖和脚本
+- `vitest.config.js` - Vitest 配置（新建）
+- `src/test/setup.js` - 测试环境配置（新建）
+- `src/test/mocks.js` - Mock 数据（新建）
+- `src/hooks/useWeather.test.js` - Hook 测试（新建）
+- `src/components/WeatherCard.test.jsx` - 组件测试（新建）
+- `src/services/weatherApi.test.js` - API 测试（新建）
+
+**下一步**:
+- [ ] 添加更多组件测试（Globe, SearchBar）
+- [ ] 考虑添加 E2E 测试（Playwright）
+- [ ] 持续提升整体覆盖率
+
+---
 
 ### 2026-01-19 - V2.3 移动端优化
 

@@ -25,5 +25,8 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# Test coverage
+coverage/
+
 # Local Netlify folder
 .netlify
